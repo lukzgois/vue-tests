@@ -19,7 +19,16 @@ Route::get('/vue', 'ClientsController@vue');
 Route::get('/jquery', 'ClientsController@jquery');
 
 Route::get('/clients', function() {
-    return App\Client::simplePaginate(10);
+    $term = Input::get('term');
+    $query = new App\Client;
+
+    if (isset($term)) {
+        $query = $query
+                    ->where('name', 'like', "$term%")
+                    ->orWhere('email', 'like', "$term%");
+    }
+
+    return $query->simplePaginate(10);
 });
 
 

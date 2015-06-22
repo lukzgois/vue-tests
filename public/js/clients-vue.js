@@ -1,11 +1,15 @@
 ;new Vue({
     el: '#clients',
     data: {
+        columns: [
+            '#', 'Nome', 'E-mail', 'Estado'
+        ],
         clients: [],
         prev_page_url: '',
-        next_page_url: ''
+        next_page_url: '',
+        term: ''
     },
-    
+
     ready: function() {
         var self = this;
         this.makeAjaxRequest('/clients');
@@ -25,6 +29,11 @@
                 self.prev_page_url = data.prev_page_url;
                 self.next_page_url = data.next_page_url;
             });
+        },
+        search: function(e) {
+            var page = '/clients?term=' + this.term;
+            this.makeAjaxRequest(page);
+            e.preventDefault();
         }
     }
 });

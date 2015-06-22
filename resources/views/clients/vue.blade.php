@@ -3,15 +3,24 @@
 @section('content')
     <h1>Lista de Clientes</h1>
     <hr>
-
+    
     <div id="clients">
-        <table class="table">
+
+        <form class="form-inline" v-on="submit: search">
+            <div class="form-group">
+                <input type="text" class="form-control" v-model="term" placeholder="Nome ou E-mail">
+            </div>
+            <button type="submit" class="btn btn-success">Buscar</button>
+        </form>
+
+        <br />
+
+        <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>E-mail</th>
-                    <th>Estado</th>
+                    <th v-repeat="column:columns">
+                        @{{ column }}
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -47,7 +56,7 @@
                 v-attr="disabled: !next_page_url"
                 class="btn btn-default"
                 role="button">
-                    Anterior
+                    Próxima
             </a>
 
         </div>
